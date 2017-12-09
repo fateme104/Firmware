@@ -1,0 +1,38 @@
+Tyto mixer for PX4FMU
+===========================
+Designed for 7003_FW1
+MAIN1 would be aileron,
+MAIN2 the left elevator left
+MAIN3 is right elevator right
+MAIN4 is throttle.
+This file defines mixers suitable for controlling a fixed wing aircraft with
+Aileron, elevator, throttle controls using PX4FMU.
+The configuration assumes the aileron servo(s) are connected to PX4FMU servo
+Output 0, the elevator to output 1 and 2, the throttle to output 3.
+MAIN1 would be aileron, MAIN2 the left elevator, MAIN3 is right elevator and MAIN4 is throttle.
+Inputs to the mixer come from channel group 0 (vehicle attitude), channels 0 (roll), 1 (pitch) and 3 (thrust).
+Aileron mixer (roll)
+---------------------------------
+This mixer assumes that the aileron servos are set up correctly mechanically;
+Depending on the actual configuration it may be necessary to reverse the scaling factors (to reverse the servo movement) and adjust the offset, scaling and endpoints to suit.
+M: 1
+O:       10000   10000      0 -10000  10000
+S: 0 0  -10000  -10000      0 -10000  10000
+
+Elevator mixer
+------------
+Two scalars total (output, pitch).
+This mixer assumes that the elevator servo is set up correctly mechanically;
+Depending on the actual configuration it may be necessary to reverse the scaling factors (to reverse the servo movement) and adjust the offset, scaling and endpoints to suit.
+M: 1
+O:      10000  10000      0 -10000  10000
+S: 0 1  10000  10000      0 -10000  10000
+M: 1
+O:      10000  10000      0 -10000  10000
+S: 0 1 -10000 -10000      0 -10000  10000
+-----------------
+Two scalers total (output, thrust).
+This mixer generates a full-range output (-1 to 1) from an input in the (0 - 1) range.  Inputs below zero are treated as zero.
+M: 1
+O:      10000  10000      0 -10000  10000
+S: 0 3      0  20000 -10000 -10000  10000
